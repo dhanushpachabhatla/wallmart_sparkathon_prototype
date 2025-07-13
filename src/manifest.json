@@ -1,0 +1,25 @@
+{
+  "name": "Walmart SmartCart+",
+  "short_name": "SmartCart+",
+  "description": "Snap, Shop, Go - Your smart shopping companion",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0071ce",
+  "theme_color": "#0071ce",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["shopping", "lifestyle"],
+  "screenshots": [
+    {
+      "src": "/screenshot1.png",
+      "type": "image/png",
+      "sizes": "540x720"
+    }
+  ]
+}
