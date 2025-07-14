@@ -221,13 +221,80 @@ const WallyAIPage: React.FC = () => {
       timestamp: new Date()
     },
     {
-      id: '2',
+  id: '2',
+  type: 'user',
+  content: "Can you give me my monthly shopping report?",
+  timestamp: new Date(Date.now() - 300000)
+},
+{
+  id: '3',
+  type: 'ai',
+  content: "Sure! Here's your summary for July 2025. You've purchased 12 items. Here's the breakdown:",
+  timestamp: new Date(Date.now() - 240000),
+  reportSummary: {
+    month: "July 2025",
+    totalSpent: 64.25,
+    totalItems: 12,
+    mostBoughtCategory: "Produce"
+  },
+  productCards: [
+    {
+      id: 'milk-1',
+      title: 'Whole Milk, 1 Gallon',
+      price: 4.25,
+      image: 'https://images.pexels.com/photos/416656/pexels-photo-416656.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2',
+      aisle: '12',
+      category: 'Dairy',
+      purchaseDate: '2025-07-04'
+    },
+    {
+      id: 'bread-1',
+      title: 'Wheat Bread, 1 Loaf',
+      price: 2.98,
+      image: 'https://images.pexels.com/photos/2434/bread-food-healthy-breakfast.jpg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2',
+      aisle: '7',
+      category: 'Bakery',
+      purchaseDate: '2025-07-05'
+    },
+    {
+      id: 'apple-2',
+      title: 'Red Apples, 3 lb',
+      price: 3.99,
+      image: 'https://images.pexels.com/photos/102104/pexels-photo-102104.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2',
+      aisle: '1',
+      category: 'Produce',
+      purchaseDate: '2025-07-10'
+    },
+    {
+      id: 'egg-1',
+      title: 'Grade A Eggs, 12 ct',
+      price: 2.49,
+      image: 'https://images.pexels.com/photos/162712/eggs-carton-tray-grocery-162712.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2',
+      aisle: '12',
+      category: 'Dairy',
+      purchaseDate: '2025-07-11'
+    },
+    {
+      id: 'rice-1',
+      title: 'Basmati Rice, 10 lb',
+      price: 12.00,
+      image: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&dpr=2',
+      aisle: '9',
+      category: 'Grains',
+      purchaseDate: '2025-07-13'
+    }
+    // More products can be listed similarly...
+  ]
+}
+,
+    {
+      id: '4',
       type: 'user',
       content: "I need to make apple pie today, list items and I'll see if to add to cart",
       timestamp: new Date(Date.now() - 300000)
     },
     {
-      id: '3',
+      id: '5',
       type: 'ai',
       content: "Perfect! Here are the essential ingredients for a delicious homemade apple pie. I've found these items in our store with their locations:",
       timestamp: new Date(Date.now() - 240000),
@@ -280,13 +347,13 @@ const WallyAIPage: React.FC = () => {
       ]
     },
     {
-      id: '4',
+      id: '6',
       type: 'user',
       content: "I'm in store, want to make apple pie today, what ingredients should I have? Show me directions",
       timestamp: new Date(Date.now() - 180000)
     },
     {
-      id: '5',
+      id: '7',
       type: 'ai',
       content: "Great! Since you're in the store, I'll show you exactly where to find each apple pie ingredient. Here's your optimized shopping route:",
       timestamp: new Date(Date.now() - 120000),
