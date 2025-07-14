@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
+// src/App.tsx
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import { AppProvider } from './contexts/AppContext';
+
+// Import your pages (now they don't need direct import here if only accessed via Outlet)
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import SmartListPage from './pages/SmartListPage';
@@ -8,54 +11,36 @@ import SnapCheckoutPage from './pages/SnapCheckoutPage';
 import WallyAIPage from './pages/WallyAIPage';
 import OrdersPage from './pages/OrdersPage';
 import ProfilePage from './pages/ProfilePage';
-import Navigation from './components/Navigation';
 
-const AppContent: React.FC = () => {
-  const { user, isLoading } = useAuth();
-  const [currentPage, setCurrentPage] = useState('home');
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-[#0071ce] flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-white text-lg">Loading SmartCart+...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return <LoginPage />;
-  }
-
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'home': return <HomePage />;
-      case 'smartlist': return <SmartListPage />;
-      case 'snap': return <SnapCheckoutPage />;
-      case 'assistant': return <WallyAIPage />;
-      case 'orders': return <OrdersPage />;
-      case 'profile': return <ProfilePage />;
-      default: return <HomePage />;
-    }
-  };
-
-  return (
-    <>
-      <Navigation currentPage={currentPage} onNavigate={setCurrentPage} />
-      {renderPage()}
-    </>
-  );
-};
+// Import the new AuthenticatedLayout
+import AuthenticatedLayout from './components/AuthenticatedLayout';
 
 function App() {
   return (
-    <AuthProvider>
-      <AppProvider>
-        <AppContent />
-      </AppProvider>
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <AppProvider>
+          <Routes>
+            {/* Public route for login. This route should NOT be inside AuthenticatedLayout */}
+            <Route path="/login" element={<LoginPage />} />
+
+            {/* All authenticated routes will be children of AuthenticatedLayout */}
+            <Route path="/" element={<AuthenticatedLayout />}>
+              {/* These are the routes that will render within the <Outlet> of AuthenticatedLayout */}
+              <Route index element={<HomePage />} /> {/* default route for / */}
+              <Route path="/smart-list" element={<SmartListPage />} />
+              <Route path="/snap-checkout" element={<SnapCheckoutPage />} />
+              <Route path="/wally-ai" element={<WallyAIPage />} />
+              <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+            </Route>
+
+            {/* Fallback for any unmatched routes */}
+            <Route path="*" element={<div>404 Not Found</div>} />
+          </Routes>
+        </AppProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

@@ -1,17 +1,20 @@
+// src/pages/HomePage.tsx
 import React, { useState } from 'react';
 import { Search, Filter, TrendingUp, Heart, Sparkles } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { useApp } from '../contexts/AppContext';
 import ProductCard from '../components/ProductCard';
 import { Product } from '../types';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
   const { user } = useAuth();
   const { smartLists, currentStore } = useApp();
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
+  const navigate = useNavigate();
 
-  // Mock products data
+  // ... (mock data and handleCardClick function remain the same) ...
   const products: Product[] = [
     {
       id: '1',
@@ -93,8 +96,25 @@ const HomePage: React.FC = () => {
     { name: 'Bakery', image: 'https://images.pexels.com/photos/1586947/pexels-photo-1586947.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&dpr=2' }
   ];
 
+  const handleCardClick = (action: string) => {
+    switch (action) {
+      case 'smartlist':
+        navigate('/smart-list');
+        break;
+      case 'snap':
+        navigate('/snap-checkout');
+        break;
+      case 'assistant':
+        navigate('/wally-ai');
+        break;
+      default:
+        console.warn('Unknown action:', action);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 pb-20 lg:pb-8 lg:pl-64">
+    // REMOVE lg:pl-64 from here. This component should just be the page content.
+    <div className="min-h-screen bg-gray-50 pb-20 lg:pb-8 lg:ml-60"> {/* Removed lg:pl-64 */}
       {/* Header */}
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 py-4">
@@ -134,7 +154,11 @@ const HomePage: React.FC = () => {
           {/* Quick Access Cards */}
           <div className="grid grid-cols-3 gap-3">
             {quickAccessCards.map((card, index) => (
-              <div key={index} className={`${card.color} p-4 rounded-lg text-center cursor-pointer hover:scale-105 transition-transform`}>
+              <div
+                key={index}
+                className={`${card.color} p-4 rounded-lg text-center cursor-pointer hover:scale-105 transition-transform`}
+                onClick={() => handleCardClick(card.action)}
+              >
                 <div className="text-2xl mb-1">{card.icon}</div>
                 <p className="text-sm font-medium">{card.title}</p>
               </div>
@@ -186,7 +210,7 @@ const HomePage: React.FC = () => {
             <Heart className="w-5 h-5 text-red-500" />
             <h2 className="text-xl font-bold text-gray-900">Recommended for You</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4">
             {products.slice(2).map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
