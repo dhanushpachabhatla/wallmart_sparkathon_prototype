@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ShoppingCart, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -11,25 +12,38 @@ const LoginPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const { login, signup, loginWithGoogle } = useAuth();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate loading and navigate to home page
-    setTimeout(() => {
+    try {
+      if (isLogin) {
+        await login(email, password);
+      } else {
+        await signup(email, password, name);
+      }
+      navigate('/'); // Navigate to home after successful login/signup
+    } catch (error) {
+      console.error('Authentication failed:', error);
+      alert('Login or signup failed!');
+    } finally {
       setIsLoading(false);
-      navigate('/'); // Change '/home' to your actual home route
-    }, 1000);
+    }
   };
 
   const handleGoogleLogin = async () => {
     setIsLoading(true);
-
-    // Simulate loading and navigate to home page
-    setTimeout(() => {
+    try {
+      await loginWithGoogle();
+      navigate('/'); // Navigate to home after successful Google login
+    } catch (error) {
+      console.error('Google login failed:', error);
+      alert('Google login failed!');
+    } finally {
       setIsLoading(false);
-      navigate('/'); // Change '/home' to your actual home route
-    }, 1000);
+    }
   };
 
   return (
@@ -135,9 +149,9 @@ const LoginPage: React.FC = () => {
             disabled={isLoading}
             className="w-full flex items-center justify-center space-x-3 py-3 border-2 border-gray-300 rounded-lg hover:bg-gray-50 disabled:bg-gray-100 disabled:cursor-not-allowed transition-all"
           >
-            <img 
-              src="https://developers.google.com/identity/images/g-logo.png" 
-              alt="Google" 
+            <img
+              src="https://developers.google.com/identity/images/g-logo.png"
+              alt="Google"
               className="w-5 h-5"
             />
             <span className="font-medium text-gray-700">Continue with Google</span>
