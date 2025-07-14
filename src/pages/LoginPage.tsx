@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ShoppingCart, Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -9,34 +9,27 @@ const LoginPage: React.FC = () => {
   const [name, setName] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { login, loginWithGoogle, signup } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    try {
-      if (isLogin) {
-        await login(email, password);
-      } else {
-        await signup(email, password, name);
-      }
-    } catch (error) {
-      console.error('Authentication failed:', error);
-    } finally {
+
+    // Simulate loading and navigate to home page
+    setTimeout(() => {
       setIsLoading(false);
-    }
+      navigate('/'); // Change '/home' to your actual home route
+    }, 1000);
   };
 
   const handleGoogleLogin = async () => {
     setIsLoading(true);
-    try {
-      await loginWithGoogle();
-    } catch (error) {
-      console.error('Google login failed:', error);
-    } finally {
+
+    // Simulate loading and navigate to home page
+    setTimeout(() => {
       setIsLoading(false);
-    }
+      navigate('/'); // Change '/home' to your actual home route
+    }, 1000);
   };
 
   return (
