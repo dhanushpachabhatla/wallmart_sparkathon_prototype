@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { AppProvider } from './contexts/AppContext';
 
-// Import your pages (now they don't need direct import here if only accessed via Outlet)
+// Import your pages
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import SmartListPage from './pages/SmartListPage';
@@ -21,18 +21,18 @@ function App() {
       <AuthProvider>
         <AppProvider>
           <Routes>
-            {/* Public route for login. This route should NOT be inside AuthenticatedLayout */}
+            {/* Public route for login */}
             <Route path="/login" element={<LoginPage />} />
 
-            {/* All authenticated routes will be children of AuthenticatedLayout */}
+            {/* All authenticated routes as children of AuthenticatedLayout */}
             <Route path="/" element={<AuthenticatedLayout />}>
-              {/* These are the routes that will render within the <Outlet> of AuthenticatedLayout */}
-              <Route index element={<HomePage />} /> {/* default route for / */}
-              <Route path="/smart-list" element={<SmartListPage />} />
-              <Route path="/snap-checkout" element={<SnapCheckoutPage />} />
-              <Route path="/wally-ai" element={<WallyAIPage />} />
-              <Route path="/orders" element={<OrdersPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              {/* Default route for / */}
+              <Route index element={<HomePage />} />
+              <Route path="smart-list" element={<SmartListPage />} />
+              <Route path="snap-checkout" element={<SnapCheckoutPage />} />
+              <Route path="wally-ai" element={<WallyAIPage />} />
+              <Route path="orders" element={<OrdersPage />} />
+              <Route path="profile" element={<ProfilePage />} />
             </Route>
 
             {/* Fallback for any unmatched routes */}
